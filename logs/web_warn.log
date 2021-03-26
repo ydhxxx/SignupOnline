@@ -1,0 +1,52 @@
+2021-03-26 00:24:39.000 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 00:28:18.991 [https-jsse-nio-443-exec-1] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+### Error querying database.  Cause: java.lang.IllegalStateException: Type handler was null on parameter mapping for property '__frch_item_0'. It was either not specified and/or could not be found for the javaType (java.util.LinkedHashMap) : jdbcType (null) combination.
+### Cause: java.lang.IllegalStateException: Type handler was null on parameter mapping for property '__frch_item_0'. It was either not specified and/or could not be found for the javaType (java.util.LinkedHashMap) : jdbcType (null) combination.]
+2021-03-26 00:30:08.602 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 00:30:13.319 [https-jsse-nio-443-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+### Error querying database.  Cause: java.lang.IllegalStateException: Type handler was null on parameter mapping for property '__frch_item_0'. It was either not specified and/or could not be found for the javaType (java.util.LinkedHashMap) : jdbcType (null) combination.
+### Cause: java.lang.IllegalStateException: Type handler was null on parameter mapping for property '__frch_item_0'. It was either not specified and/or could not be found for the javaType (java.util.LinkedHashMap) : jdbcType (null) combination.]
+2021-03-26 00:33:30.734 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 00:33:34.601 [https-jsse-nio-443-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLException: Column count doesn't match value count at row 1
+### The error may exist in file [D:\IntelliJ IDEA 2018.2.2\Projects\SignupOnline\target\classes\mapper\PartakeMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: INSERT INTO `gather_partake` ( `openid`, `gather_id`, `field`, `type`, `value` )         VALUES                                                  (?, ?,0,?)                  ,                      (?, ?,0,?)                  ,                      (?, ?,0,?)                                                           ,                   (?, ?,1,?)              ,                  (?, ?,1,?)                                                                   ;
+### Cause: java.sql.SQLException: Column count doesn't match value count at row 1
+; bad SQL grammar []; nested exception is java.sql.SQLException: Column count doesn't match value count at row 1]
+2021-03-26 00:36:21.179 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 00:36:25.874 [https-jsse-nio-443-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLException: Column count doesn't match value count at row 1
+### The error may exist in file [D:\IntelliJ IDEA 2018.2.2\Projects\SignupOnline\target\classes\mapper\PartakeMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: INSERT INTO `gather_partake` ( `openid`, `gather_id`, `field`, `type`, `value` )         VALUES                                                  (?, ?,0,?)                  ,                      (?, ?,0,?)                  ,                      (?, ?,0,?)                                                           ,                   (?, ?,1,?)              ,                  (?, ?,1,?)                                                                   ;
+### Cause: java.sql.SQLException: Column count doesn't match value count at row 1
+; bad SQL grammar []; nested exception is java.sql.SQLException: Column count doesn't match value count at row 1]
+2021-03-26 00:38:24.614 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 00:38:31.822 [https-jsse-nio-443-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.dao.DataIntegrityViolationException: 
+### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column 'gather_id' cannot be null
+### The error may exist in file [D:\IntelliJ IDEA 2018.2.2\Projects\SignupOnline\target\classes\mapper\PartakeMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: INSERT INTO `gather_partake` ( `openid`, `gather_id`, `field`, `type`, `value` )         VALUES                                                  (?,?, ?,0,?)                  ,                      (?,?, ?,0,?)                  ,                      (?,?, ?,0,?)                                                           ,                   (?,?, ?,1,?)              ,                  (?,?, ?,1,?)                                                                   ;
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Column 'gather_id' cannot be null
+; Column 'gather_id' cannot be null; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column 'gather_id' cannot be null]
+2021-03-26 00:39:19.757 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 00:39:24.168 [https-jsse-nio-443-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.apache.ibatis.binding.BindingException: Mapper method 'com.example.signuponline.mapper.PartakeMapper.partakeGather attempted to return null from a method with a primitive return type (boolean).]
+2021-03-26 00:40:36.562 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 11:14:30.165 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 13:52:30.606 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 14:19:50.218 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 14:26:06.341 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 20:21:00.684 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 20:47:53.346 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 20:56:03.838 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 20:58:57.021 [https-jsse-nio-443-exec-2] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.binding.BindingException: Parameter 'activityId' not found. Available parameters are [openid, gatherId, param1, param2]]
+2021-03-26 21:00:56.783 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 21:09:13.841 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 22:25:39.148 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 23:00:52.793 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 23:10:59.900 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-03-26 23:13:15.617 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)

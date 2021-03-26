@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.signuponline.mapper.PartakeMapper">
+
+
+    <!-- 收藏与取消收藏-->
+    <insert id="collect" parameterType="String">
+
+        <choose>
+            <when test="map.isCollect==false">
+                INSERT INTO `collect` ( `openid`, `activity_id`, `create_time` )
+                VALUES
+                (#{map.openid},#{map.activityId},current_timestamp());
+            </when>
+            <otherwise>
+                DELETE FROM `collect` WHERE `openid` = #{map.openid}
+                AND `activity_id` = #{map.activityId};
+            </otherwise>
+        </choose>
+
+    </insert>
+
+    <!-- 获取收藏列表-->
+    <select id="getCollect" parameterType="String" resultType="com.example.signuponline.bean.Activity">
+
+        SELECT
+            a.`id`,
+            a.`title`,
+            a.`type1`,
+            a.`type2`,
+            a.`address`,
+            a.`start_time`,
+            a.`end_time`,
+            a.`poster_url`,
+            COUNT( b.`activity_id` ) AS persons
+        FROM
+            ( SELECT * FROM `activity` WHERE `id` IN ( SELECT `activity_id` FROM `collect`
+            WHERE `openid` = #{openid} ) ) a
+            LEFT JOIN `general_partake` b ON a.`id` = b.`activity_id`
+        GROUP BY
+            a.`id`;
+
+    </select>
+
+
+    <!-- 报名普通活动-->
+    <insert id="generalPartake" >
+
+        INSERT INTO `general_partake` ( `openid`, `activity_id`, `create_time` )
+		SELECT #{map.openid},#{map.activityId},current_timestamp()
+		FROM DUAL
+		WHERE NOT EXISTS(SELECT `id` FROM `general_partake` WHERE `openid` = #{map.openid}
+		and `activity_id`=#{map.activityId} );
+
+    </insert>
+
+    <!-- 报名信息收集活动-->
+    <insert id="partakeGather">
+
+        INSERT INTO `gather_partake` ( `openid`, `gather_id`, `field`, `type`, `value` )
+        VALUES
+        <choose>
+            <when test="map.inputList.size>0">
+                <foreach collection="map.inputList" item="item"  separator=",">
+                    (#{map.openid},#{map.gatherId}, #{item.name},0,#{item.value})
+                </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="map.selectList.size>0">
+                ,<foreach collection="map.selectList" item="item" separator=",">
+                (#{map.openid},#{map.gatherId}, #{item.name},1,#{item.value})
+            </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="map.selectMulList.size>0">
+                ,<foreach collection="map.selectMulList" item="item" separator=",">
+                (#{map.openid},#{map.gatherId}, #{item.name},2,#{item.value})
+            </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="map.areaList.size>0">
+                ,<foreach collection="map.areaList" item="item"  separator=",">
+                (#{map.openid},#{map.gatherId}, #{item.name},3,#{item.value})
+            </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="map.isAddress==true">
+                ,(#{map.openid},#{map.gatherId}, '地址',4,#{map.address});
+            </when>
+        </choose>
+        ;
+
+    </insert>
+
+    <!-- 活动详情页查询是否收藏和报名  -->
+    <select id="getUserFlagC" resultType="String">
+
+        SELECT
+            `create_time`
+        FROM
+            `collect`
+        WHERE
+            `openid` = #{openid}
+            AND `activity_id` = #{activityId};
+
+    </select>
+
+    <!-- 活动详情页查询是否收藏和报名  -->
+    <select id="getUserFlagP" resultType="String">
+
+        SELECT
+            `create_time`
+        FROM
+            `general_partake`
+        WHERE
+            `openid` = #{openid}
+            AND `activity_id` = #{activityId};
+
+    </select>
+
+    <!-- 查询是否参与信息收集报名-->
+    <select id="getGatherFlag" resultType="String">
+
+        SELECT DISTINCT
+            `create_time`
+        FROM
+            `gather_partake`
+        WHERE
+            `openid` = #{openid}
+
+            AND `gather_id` = #{gatherId};
+
+    </select>
+
+    <!-- 查询用户参与的普通活动-->
+    <select id="getActivity" resultType="com.example.signuponline.bean.Activity">
+
+        SELECT
+            a.`id`,
+            a.`title`,
+            a.`type1`,
+            a.`type2`,
+            a.`address`,
+            a.`start_time`,
+            a.`end_time`,
+            a.`poster_url`
+        FROM
+            `activity` a
+            JOIN `general_partake` b ON a.`id` = b.`activity_id`
+            AND b.`openid` = #{openid};
+
+    </select>
+
+    <!-- 查询用户参与的信息收集活动-->
+    <select id="getGather" resultType="com.example.signuponline.bean.GatherActivity">
+
+        SELECT DISTINCT
+            a.`id`,
+            a.`title`,
+            a.`start_time`,
+            a.`end_time`,
+            a.`poster_url`
+        FROM
+            `gather` a
+            JOIN `gather_partake` b ON a.`id` = b.`gather_id`
+            AND b.`openid` = #{openid};
+
+    </select>
+
+
+</mapper>

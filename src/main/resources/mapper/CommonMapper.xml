@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.signuponline.mapper.CommonMapper">
+
+
+    <!--<resultMap type="java.util.HashMap" id="activityForHome">-->
+
+        <!--<id column="id" property="id" javaType="int" jdbcType="INTEGER"/>-->
+        <!--<result column="title" property="title" javaType="String" jdbcType="VARCHAR"/>-->
+        <!--<result column="type1" property="type1" javaType="String" jdbcType="VARCHAR"/>-->
+        <!--<result column="type2" property="type2" javaType="String" jdbcType="VARCHAR"/>-->
+        <!--<result column="address" property="address" javaType="String" jdbcType="VARCHAR"/>-->
+        <!--<result column="start_time" property="startTime" javaType="String" jdbcType="VARCHAR"/>-->
+        <!--<result column="poster_url" property="posterUrl" javaType="String" jdbcType="VARCHAR"/>-->
+        <!--<result column="COUNT(id)" property="persons" javaType="int" jdbcType="INTEGER"/>-->
+
+    <!--</resultMap>-->
+
+     <!-- 首页展示活动卡片内容-->
+    <select id="getActivityForHome" resultType="com.example.signuponline.bean.Activity">
+
+        SELECT
+            a.`id`,
+            a.`title`,
+            a.`type1`,
+            a.`type2`,
+            a.`address`,
+            a.`start_time`,
+            a.`end_time`,
+            a.`poster_url`,
+            COUNT( b.`activity_id` ) AS persons
+        FROM
+            (SELECT * from `activity` where `end_time` &gt;= current_timestamp() AND `group_id` IS NULL) a
+            LEFT JOIN `general_partake` b ON a.`id`= b.`activity_id`
+            GROUP BY a.`id`;
+
+    </select>
+
+
+    <!-- 活动详情页内容  -->
+    <select id="getActivityDetails"  resultType="com.example.signuponline.bean.Activity" parameterType="int">
+
+        SELECT * from activity where id=#{id};
+
+    </select>
+
+    <!-- 浏览活动-->
+    <select id="browse" parameterType="int">
+
+        INSERT INTO `browse` ( `activity_id`, `browse_times`, `update_time` )
+        VALUES
+            ( #{id}, 1, CURRENT_TIMESTAMP ( ) ) ON DUPLICATE KEY UPDATE `browse_times` = `browse_times` + 1,
+            `update_time` = CURRENT_TIMESTAMP ( );
+
+    </select>
+
+
+
+    <!-- 获取分类活动列表  -->
+    <select id="getClassifyActivity" parameterType="String" resultType="com.example.signuponline.bean.Activity">
+
+        SELECT
+            a.`id`,
+            a.`title`,
+            a.`type1`,
+            a.`type2`,
+            a.`address`,
+            a.`start_time`,
+            a.`end_time`,
+            a.`poster_url`,
+            COUNT( b.`activity_id` ) AS persons
+        FROM
+        (SELECT * from `activity` where `type1`=#{type1} AND `end_time` &gt;= current_timestamp() AND `group_id` IS NULL ) a
+            LEFT JOIN `general_partake` b ON a.`id`= b.`activity_id`
+            GROUP BY a.`id`;
+
+    </select>
+
+    <!-- 获取搜索列表  -->
+    <select id="search" parameterType="String" resultType="com.example.signuponline.bean.Activity">
+
+
+        SELECT
+            a.`id`,
+            a.`title`,
+            a.`type1`,
+            a.`type2`,
+            a.`address`,
+            a.`start_time`,
+            a.`end_time`,
+            a.`poster_url`,
+            COUNT( b.`activity_id` ) AS persons
+        FROM
+        (SELECT * from `activity` where `group_id` IS NULL AND
+            (`title` like CONCAT("%",#{map.key},"%") or `type1`like CONCAT("%",#{map.key},"%") or `type2` like CONCAT("%",#{map.key},"%")) ) a
+            LEFT JOIN `general_partake` b ON a.`id`= b.`activity_id`
+            GROUP BY a.`id`;
+
+    </select>
+
+    <!-- 插入搜索数据  -->
+    <select id="addSearch" parameterType="String" resultType="com.example.signuponline.bean.Activity">
+
+        INSERT INTO `search` ( `openid`, `key`, `create_time` )
+        VALUES
+        (#{map.openid},#{map.key},current_timestamp());
+
+    </select>
+
+    <!-- 获取热门搜索数据  -->
+    <select id="getHotSearch" resultType="String">
+
+        SELECT  `key`  FROM `search` GROUP BY `key` ORDER BY count( 1 ) DESC LIMIT 4;
+
+    </select>
+
+    <!-- 获取搜索历史 -->
+    <select id="getHistorySearch" resultType="String">
+
+        SELECT
+            `key`
+        FROM
+            `search`
+        WHERE
+            `openid` = #{openid}
+
+            ORDER BY `create_time` desc
+            LIMIT 12;
+
+    </select>
+
+    <!-- 清空历史搜索数据 -->
+    <delete id="clearHistory" parameterType="String">
+
+        DELETE FROM `search` WHERE `openid`=#{openid};
+
+    </delete>
+
+    <!-- 创建群组 -->
+    <insert id="createGroup" parameterType="String">
+
+        INSERT INTO `group` ( `id`, `openid`, `name`, `create_time` )
+        SELECT #{map.id},#{map.openid},#{map.name}, current_timestamp()
+        FROM DUAL
+        WHERE NOT EXISTS(SELECT `id` FROM `group` WHERE `name` = #{map.name});
+
+    </insert>
+
+    <!-- 加入群组成员表-->
+    <insert id="joinGroup" parameterType="String">
+
+        INSERT INTO `group_member` (`group_id`, `openid`, `create_time` )
+        SELECT #{map.id},#{map.openid}, current_timestamp()
+        FROM DUAL
+        WHERE NOT EXISTS(SELECT `id` FROM `group_member` WHERE `group_id` = #{map.id} and `openid`=#{map.openid});
+
+    </insert>
+
+    <delete id="exitGroup" parameterType="String" >
+
+        DELETE FROM `group_member` WHERE `openid`=#{map.openid} AND `group_id`=#{map.groupId};
+
+    </delete>
+
+    <!-- 查询群组是否存在-->
+    <select id="queryGroup"  parameterType="String" resultType="com.example.signuponline.bean.Group">
+
+        SELECT * from `group` where `id`=#{id};
+
+    </select>
+
+    <!-- 根据用户openid获取所在群组id、name-->
+    <select id="getGroupByMember" parameterType="String" resultType="com.example.signuponline.bean.Group">
+
+        SELECT
+            a.`id`,
+            a.`name`,
+            a.`openid`
+        FROM
+            `group` a
+            JOIN `group_member` b ON a.`id` = b.`group_id`
+            AND b.`openid` = #{openid};
+
+    </select>
+
+
+
+    <resultMap type="java.util.HashMap" id="activityForGroup">
+
+        <id column="id" property="id" javaType="int" jdbcType="INTEGER"/>
+        <result column="openid" property="openid" javaType="String" jdbcType="VARCHAR"/>
+        <result column="type1" property="type1" javaType="String" jdbcType="VARCHAR"/>
+        <result column="avatar_url" property="avatar_url" javaType="String" jdbcType="VARCHAR"/>
+        <result column="title" property="title" javaType="String" jdbcType="VARCHAR"/>
+        <result column="poster_url" property="poster_url" javaType="String" jdbcType="VARCHAR"/>
+        <result column="start_time" property="start_time" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <!-- 根据groupId获取特定活动格式-->
+    <select id="getActivityByGroup" parameterType="String" resultMap="activityForGroup">
+
+        SELECT
+            a.`id`,
+            a.`openid`,
+            b.`avatar_url`,
+            a.`title`,
+            a.`type1`,
+            a.`poster_url`,
+            a.`start_time`,
+            a.`end_time`
+        FROM
+            `activity` a
+            JOIN `user` b ON a.`openid` = b.`openid`
+            AND a.`group_id` = #{groupId};
+
+    </select>
+
+    <resultMap type="java.util.HashMap" id="carousel">
+
+        <id column="id" property="id" javaType="int" jdbcType="INTEGER"/>
+        <result column="title" property="title" javaType="String" jdbcType="VARCHAR"/>
+        <result column="poster_url" property="poster_url" javaType="String" jdbcType="VARCHAR"/>
+        
+    </resultMap>
+
+    <!-- 获取轮播图内容-->
+    <select id="getCarousel" resultMap="carousel">
+
+        SELECT
+            a.`id`,
+            a.`title`,
+            a.`poster_url`
+        FROM
+            `activity` a
+            JOIN `browse` b ON a.`id` = b.`activity_id` AND a.`end_time` &gt;= current_timestamp() AND a.`group_id` IS NULL
+        ORDER BY
+            b.`browse_times` DESC
+            LIMIT 5;
+
+    </select>
+
+    <resultMap type="java.util.HashMap" id="gatherForGroup">
+
+        <id column="id" property="id" javaType="String" jdbcType="VARCHAR"/>
+        <result column="openid" property="openid" javaType="String" jdbcType="VARCHAR"/>
+        <result column="avatar_url" property="avatar_url" javaType="String" jdbcType="VARCHAR"/>
+        <result column="title" property="title" javaType="String" jdbcType="VARCHAR"/>
+        <result column="poster_url" property="poster_url" javaType="String" jdbcType="VARCHAR"/>
+        <result column="start_time" property="start_time" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <!-- 根据groupId获取特定信息收集活动格式-->
+    <select id="getGatherByGroup" parameterType="String" resultMap="gatherForGroup">
+
+        SELECT
+            a.`id`,
+            a.`openid`,
+            b.`avatar_url`,
+            a.`title`,
+            a.`poster_url`,
+            a.`start_time`,
+            a.`end_time`
+        FROM
+            `gather` a
+            JOIN `user` b ON a.`openid` = b.`openid`
+            AND a.`group_id` = #{groupId};
+
+    </select>
+
+    <!-- 根据groupId获取信息收集活动具体表单-->
+    <select id="getGatherDetails" resultType="com.example.signuponline.bean.GatherActivity">
+
+        SELECT
+            `id`,
+            `openid`,
+            `title`,
+            `poster_url`,
+            `group_id`,
+            `start_time`,
+            `end_time`
+        FROM
+            `gather`
+        WHERE
+            `id` = #{id};
+
+    </select>
+    <!-- 根据groupId获取信息收集活动具体表单field-->
+    <select id="getGatherDetailsField" resultType="com.example.signuponline.bean.GatherField">
+
+        SELECT
+            `gather_id`,
+            `field`,
+            `type`,
+            `select_value`
+        FROM
+            `gather_field`
+        WHERE
+            `gather_id` = #{id};
+
+    </select>
+</mapper>

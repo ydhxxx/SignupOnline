@@ -1,0 +1,71 @@
+2021-03-23 13:19:56.983 [restartedMain] INFO  com.example.signuponline.SignuponlineApplication - Starting SignuponlineApplication on WINDOWS-USEGIBJ with PID 14056 (D:\IntelliJ IDEA 2018.2.2\Projects\SignupOnline\target\classes started by yudh31611 in D:\IntelliJ IDEA 2018.2.2\Projects\SignupOnline)
+2021-03-23 13:19:56.999 [restartedMain] INFO  com.example.signuponline.SignuponlineApplication - No active profile set, falling back to default profiles: default
+2021-03-23 13:19:57.192 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-03-23 13:19:57.192 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-03-23 13:19:59.303 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2021-03-23 13:19:59.355 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35ms. Found 0 JPA repository interfaces.
+2021-03-23 13:19:59.726 [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+2021-03-23 13:19:59.806 [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2021-03-23 13:19:59.807 [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-03-23 13:19:59.807 [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-03-23 13:19:59.807 [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2021-03-23 13:19:59.808 [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2021-03-23 13:19:59.808 [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2021-03-23 13:19:59.808 [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-03-23 13:19:59.809 [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-03-23 13:19:59.865 [restartedMain] INFO  c.u.j.filter.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2021-03-23 13:20:00.573 [restartedMain] INFO  c.u.j.resolver.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2021-03-23 13:20:00.578 [restartedMain] INFO  c.u.j.detector.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2021-03-23 13:20:01.784 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 443 (https) 8080 (http)
+2021-03-23 13:20:01.797 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["https-jsse-nio-443"]
+2021-03-23 13:20:01.798 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2021-03-23 13:20:01.834 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2021-03-23 13:20:01.835 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-03-23 13:20:02.942 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2021-03-23 13:20:02.942 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5749 ms
+2021-03-23 13:20:03.089 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - String Encryptor custom Bean not found with name 'jasyptStringEncryptor'. Initializing Default String Encryptor
+2021-03-23 13:20:03.101 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Encryptor config not found for property jasypt.encryptor.algorithm, using default value: PBEWithMD5AndDES
+2021-03-23 13:20:03.101 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Encryptor config not found for property jasypt.encryptor.keyObtentionIterations, using default value: 1000
+2021-03-23 13:20:03.101 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Encryptor config not found for property jasypt.encryptor.poolSize, using default value: 1
+2021-03-23 13:20:03.102 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Encryptor config not found for property jasypt.encryptor.providerName, using default value: null
+2021-03-23 13:20:03.102 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Encryptor config not found for property jasypt.encryptor.providerClassName, using default value: null
+2021-03-23 13:20:03.102 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Encryptor config not found for property jasypt.encryptor.saltGeneratorClassname, using default value: org.jasypt.salt.RandomSaltGenerator
+2021-03-23 13:20:03.104 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Encryptor config not found for property jasypt.encryptor.ivGeneratorClassname, using default value: org.jasypt.salt.NoOpIVGenerator
+2021-03-23 13:20:03.106 [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Encryptor config not found for property jasypt.encryptor.stringOutputType, using default value: base64
+2021-03-23 13:20:03.736 [restartedMain] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-23 13:20:03.764 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2021-03-23 13:20:03.973 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2021-03-23 13:20:04.069 [task-1] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-03-23 13:20:04.173 [task-1] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-03-23 13:20:04.478 [task-1] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-03-23 13:20:04.686 [task-1] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2021-03-23 13:20:05.066 [task-1] INFO  o.h.e.t.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-03-23 13:20:05.084 [task-1] INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-03-23 13:20:05.785 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2021-03-23 13:20:06.075 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-03-23 13:20:06.411 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["https-jsse-nio-443"]
+2021-03-23 13:20:06.644 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2021-03-23 13:20:06.657 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 443 (https) 8080 (http) with context path ''
+2021-03-23 13:20:06.659 [restartedMain] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2021-03-23 13:20:06.688 [restartedMain] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2021-03-23 13:20:06.730 [restartedMain] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-03-23 13:20:07.104 [restartedMain] INFO  o.s.d.r.c.DeferredRepositoryInitializationListener - Triggering deferred initialization of Spring Data repositories…
+2021-03-23 13:20:07.105 [restartedMain] INFO  o.s.d.r.c.DeferredRepositoryInitializationListener - Spring Data repositories initialized!
+2021-03-23 13:20:07.122 [restartedMain] INFO  com.example.signuponline.SignuponlineApplication - Started SignuponlineApplication in 10.712 seconds (JVM running for 14.852)
+2021-03-23 13:20:22.912 [https-jsse-nio-443-exec-9] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-23 13:20:22.912 [https-jsse-nio-443-exec-9] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-03-23 13:20:22.922 [https-jsse-nio-443-exec-9] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 10 ms
+2021-03-23 13:20:29.939 [https-jsse-nio-443-exec-2] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[021ryy000NF7pL1PRc200VIzAP1ryy0y], type=GET, ip=192.168.115.148)
+2021-03-23 14:02:56.372 [https-jsse-nio-443-exec-10] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[041VbS000kCToL16FU100xM8nl2VbS0G], type=GET, ip=192.168.115.148)
+2021-03-23 14:13:29.567 [https-jsse-nio-443-exec-6] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[001l5VFa1GQRJA0okEFa1XNTsJ0l5VFR], type=GET, ip=192.168.115.148)
+2021-03-23 14:13:33.903 [https-jsse-nio-443-exec-8] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[0712H3000f3DoL1Djz200mqsdJ22H30F], type=GET, ip=192.168.115.148)
+2021-03-23 14:16:00.766 [https-jsse-nio-443-exec-8] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[041M8nFa1YEkJA0FoLFa1UROoC2M8nFN], type=GET, ip=192.168.115.148)
+2021-03-23 14:27:31.244 [https-jsse-nio-443-exec-10] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[071rD61w3Fx45W2Qy01w3j41S60rD61U], type=GET, ip=192.168.115.148)
+2021-03-23 14:27:39.903 [https-jsse-nio-443-exec-3] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[041riwll2mFyJ64SKRkl25081u1riwlS], type=GET, ip=192.168.115.148)
+2021-03-23 14:27:59.844 [https-jsse-nio-443-exec-5] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[0516VEFa1OI4JA0NguJa16UEjt26VEFW], type=GET, ip=192.168.115.148)
+2021-03-23 14:31:31.546 [https-jsse-nio-443-exec-4] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[001TPl000DSnoL1Fqj000za81u1TPl0I], type=GET, ip=192.168.115.148)
+2021-03-23 14:32:15.437 [https-jsse-nio-443-exec-5] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[071ebFFa1i04JA0iILIa1i8JUa4ebFFW], type=GET, ip=192.168.115.148)
+2021-03-23 14:34:53.067 [https-jsse-nio-443-exec-1] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[061E2m0002vnoL13BT100WYPa61E2m0r], type=GET, ip=192.168.115.148)
+2021-03-23 14:36:02.440 [https-jsse-nio-443-exec-9] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[031B3z0w3rvv4W2mWK0w3hipTn0B3z0b], type=GET, ip=192.168.115.148)
+2021-03-23 14:38:32.290 [https-jsse-nio-443-exec-8] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[0511FdGa161CJA0QdmIa17TKw231FdGe], type=GET, ip=192.168.115.148)
+2021-03-23 14:38:57.619 [https-jsse-nio-443-exec-2] INFO  com.example.signuponline.aspect.SysLogAspect - LogEntity(url=/wechat/getOpenid, method=com.example.signuponline.controller.WeChatController.getOpenid(), args=[0511f5000KkEoL1WBw00098H4N31f50u], type=GET, ip=192.168.115.148)

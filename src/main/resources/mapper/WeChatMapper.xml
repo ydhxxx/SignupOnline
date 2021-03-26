@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.signuponline.mapper.WeChatMapper">
+
+
+
+    <select id="login" parameterType="com.example.signuponline.bean.User">
+
+        INSERT INTO `user`(`openid`, `session_key`, `create_time`,`nick_name`,`avatar_url`)
+        SELECT #{user.openid}, #{user.sessionKey}, current_timestamp(),#{user.nickName},#{user.avatarUrl}
+        FROM DUAL
+        WHERE NOT EXISTS(SELECT `session_key` FROM `user` WHERE `openid` = #{user.openid})
+
+    </select>
+
+
+</mapper>

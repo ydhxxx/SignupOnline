@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.signuponline.mapper.PublishMapper">
+
+    <!-- 发布新的活动-->
+    <select id="newActivity" parameterType="com.example.signuponline.bean.Activity">
+
+        INSERT INTO `activity`
+        ( `openid`, `title`, `content`, `type1`, `type2`, `start_time`, `end_time`, `address`, `poster_url`, `detail_url`, `group_id` )
+        VALUES
+        (#{activity.openid},#{activity.title},#{activity.content},#{activity.type1},#{activity.type2},#{activity.startTime},#{activity.endTime},#{activity.address},
+                     #{activity.posterUrl},#{activity.detailUrl},
+                    <choose>
+                        <when test="activity.groupId==''">
+                            NULL
+                        </when>
+                        <otherwise>
+                            #{activity.groupId}
+                        </otherwise>
+                    </choose>
+                       );
+    </select>
+
+    <!-- 获取个人创建的群组-->
+    <select id="getMyGroup" parameterType="String" resultType="com.example.signuponline.bean.Group">
+
+        SELECT `id`, `name`  FROM `group`
+        WHERE
+            `openid` = #{openid};
+
+    </select>
+
+    <!-- 创建信息收集表-->
+    <insert id="newGather" parameterType="String" >
+
+        INSERT INTO `gather` ( `id`, `openid`, `title`, `poster_url`,`start_time`,`end_time`, `group_id` )
+        VALUES
+        (#{map.id},#{map.openid},#{map.title},#{map.posterUrl},#{map.startTime},#{map.endTime},
+        <choose>
+            <when test="map.groupId==''">
+                NULL
+            </when>
+            <otherwise>
+                #{map.groupId}
+            </otherwise>
+        </choose>
+        );
+
+    </insert>
+
+    <!-- 创建信息收集字段表-->
+    <insert id="newGatherField">
+
+        INSERT INTO `gather_field` (`gather_id`, `field`, `type`, `select_value` )
+        VALUES
+        <choose>
+            <when test="map.inputList.size>0">
+                <foreach collection="map.inputList" item="item"  separator=",">
+                    (#{map.id}, #{item},0,'')
+                </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="map.selectList.size>0">
+                ,<foreach collection="map.selectList" item="item" separator=",">
+                    (#{map.id}, #{item.name},1,#{item.value})
+                </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="map.selectMulList.size>0">
+                ,<foreach collection="map.selectMulList" item="item" separator=",">
+                    (#{map.id}, #{item.name},2,#{item.value})
+                </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="map.areaList.size>0">
+                ,<foreach collection="map.areaList" item="item"  separator=",">
+                    (#{map.id}, #{item},3,'')
+                </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="map.isAddress==true">
+                ,(#{map.id}, '地址',4,'');
+            </when>
+        </choose>
+        ;
+    </insert>
+
+    <!-- 获取自己发布的普通活动-->
+    <select id="getMyActivity" resultType="com.example.signuponline.bean.Activity">
+
+        SELECT
+            a.`id`,
+            a.`title`,
+            a.`type1`,
+            a.`type2`,
+            a.`address`,
+            a.`start_time`,
+            a.`end_time`,
+            a.`poster_url`,
+            COUNT( b.`activity_id` ) AS persons
+        FROM
+            (SELECT * from `activity` where  `openid`=#{openid} ) a
+            LEFT JOIN `general_partake` b ON a.`id`= b.`activity_id`
+            GROUP BY a.`id`;
+
+    </select>
+
+    <!-- 获取自己发布的信息收集活动-->
+    <select id="getMyGather" resultType="com.example.signuponline.bean.GatherActivity">
+
+        SELECT
+            a.`id`,
+            a.`title`,
+            a.`start_time`,
+            a.`end_time`,
+            a.`poster_url`,
+            count( DISTINCT b.`openid` ) AS persons
+        FROM
+            ( SELECT * FROM `gather` WHERE `openid` = #{openid} ) a
+            LEFT JOIN `gather_partake` b ON a.`id` = b.`gather_id`
+        GROUP BY a.`id`;
+
+    </select>
+
+</mapper>
