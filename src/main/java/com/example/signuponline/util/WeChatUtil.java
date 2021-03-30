@@ -28,7 +28,7 @@ public class WeChatUtil {
      * 获取微信小程序 session_key 和 openid
      *
      * @param code 调用微信登陆返回的Code
-     * @return
+     * @return string
      */
     public static String getSessionKeyOropenid(String code) {
         //微信端登录code值
@@ -38,9 +38,7 @@ public class WeChatUtil {
         requestUrlParam.put("secret", SECRET_KEY);
         requestUrlParam.put("js_code", code);
         requestUrlParam.put("grant_type", "authorization_code");
-        //发送post请求读取调用微信 https://api.weixin.qq.com/sns/jscode2session 接口获取openid用户唯一标识
-//        JSONObject jsonObject = JSON.parseObject(sendPost(requestUrl, requestUrlParam));
-//        return jsonObject;
+
         return sendPost(requestUrl, requestUrlParam);
     }
 

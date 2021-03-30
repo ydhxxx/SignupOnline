@@ -59,4 +59,31 @@ public interface PublishMapper {
      */
     List<GatherActivity> getMyGather(@Param("openid") String openid);
 
+    /**
+     * 删除普通报名活动
+     * @param id 活动id
+     * @return bool 是否删除成功
+     */
+    boolean delActivity(@Param("id") Integer id);
+
+    /**
+     * 修改普通报名活动
+     * @param map 活动信息
+     * @return bool 是否删除成功
+     */
+    boolean updateActivity(@Param("map") Map<String, String> map);
+
+    /**
+     * 删除信息收集报名活动
+     * @param id 活动id
+     * @return bool 是否删除成功
+     */
+    boolean delGather(@Param("id") String id);
+
+    /**
+     * 修改信息收集报名活动
+     * @param map 活动信息
+     * @return bool 是否删除成功
+     */
+    boolean updateGather(@Param("map") Map<String, String> map);
 }

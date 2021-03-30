@@ -14,13 +14,22 @@ import java.util.Map;
 public interface WeChatService {
 
     /**
-     * @param String code
-     * @return String
+     * 小程序获取openid
+     * @param code code
+     * @return openid
      */
     String getOpenid(String code);
 
     /**
-     * @param Map<String,String> map
+     * 小程序进行登录
+     * @param map  登录数据
      */
     void login(Map<String,String> map);
+
+    /**
+     * 获取用户信息
+     * @param code code
+     * @return user
+     */
+    User saveWeChatUser(String code);
 }

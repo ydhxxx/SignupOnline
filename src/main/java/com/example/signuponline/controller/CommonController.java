@@ -7,6 +7,10 @@ import com.example.signuponline.common.IdController;
 import com.example.signuponline.common.LogResult;
 import com.example.signuponline.service.CommonService;
 import com.example.signuponline.util.UUIDUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
  * @author yudh
  * @date 2021-03-10 21:19:39
  */
+@Api(value =  "公共服务")
 @Slf4j
 @RestController
 @RequestMapping("/common")
@@ -31,6 +36,7 @@ public class CommonController {
     private CommonService commonService;
 
 
+    @ApiOperation(value = "获取首页普通活动列表")
     @ResponseBody
     @GetMapping("/homePage/getActivity")
     public String getActivityForHome(){
@@ -38,6 +44,8 @@ public class CommonController {
         return LogResult.success(list);
     }
 
+    @ApiOperation(value = "获取普通报名活动详情")
+    @ApiImplicitParam(name = "id", value = "活动id", required = true, dataType = "Int")
     @ResponseBody
     @GetMapping("/homePage/getActivityDetails")
     public String getActivityDetails(Integer id) throws NullPointerException{
@@ -48,7 +56,8 @@ public class CommonController {
     }
 
 
-
+    @ApiOperation(value = "获取分类活动列表")
+    @ApiImplicitParam(name = "type1", value = "活动类型", required = true, dataType = "String")
     @ResponseBody
     @GetMapping("/homePage/classifyActivity")
     public String classifyActivity(String type1){
@@ -56,6 +65,7 @@ public class CommonController {
         return LogResult.success(list);
     }
 
+    @ApiOperation(value = "获取轮播图列表")
     @ResponseBody
     @GetMapping("/homePage/getCarousel")
     public String getCarousel(){
@@ -64,6 +74,8 @@ public class CommonController {
     }
 
 
+    @ApiOperation(value = "获取普通报名活动详情")
+    @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String")
     @ResponseBody
     @GetMapping("/homePage/search/getHotAndHistory")
     public String  getHotAndHistory(String openid){
@@ -76,6 +88,8 @@ public class CommonController {
 
     }
 
+    @ApiOperation(value = "清空历史搜索数据")
+    @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String",paramType = "body")
     @ResponseBody
     @PostMapping("/homePage/search/clearHistory")
     public String clearHistory(@RequestBody Map<String,Object> map){
@@ -83,6 +97,11 @@ public class CommonController {
         return LogResult.success(booleans);
     }
 
+    @ApiOperation(value = "搜索")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String",paramType = "body"),
+            @ApiImplicitParam(name = "key", value = "搜索关键词", required = true, dataType = "String",paramType = "body")
+    })
     @ResponseBody
     @PostMapping("/homePage/search")
     public String search(@RequestBody Map<String,Object> map ){
@@ -91,6 +110,11 @@ public class CommonController {
         return LogResult.success(list);
     }
 
+    @ApiOperation(value = "创建群组")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String",paramType = "body"),
+            @ApiImplicitParam(name = "name", value = "群组名", required = true, dataType = "String",paramType = "body")
+    })
     @ResponseBody
     @PostMapping("/group/createGroup")
     public String createGroup(@RequestBody Map<String,String> map){
@@ -106,6 +130,11 @@ public class CommonController {
 
     }
 
+    @ApiOperation(value = "加入群组")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String",paramType = "body"),
+            @ApiImplicitParam(name = "id", value = "群组id", required = true, dataType = "String",paramType = "body")
+    })
     @ResponseBody
     @PostMapping("/group/joinGroup")
     public String joinGroup(@RequestBody Map<String,String> map){
@@ -120,6 +149,11 @@ public class CommonController {
         return LogResult.success(group);
     }
 
+    @ApiOperation(value = "退出群组")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String",paramType = "body"),
+            @ApiImplicitParam(name = "groupId", value = "群组id", required = true, dataType = "String",paramType = "body")
+    })
     @ResponseBody
     @PostMapping("/group/exitGroup")
     public String exitGroup(@RequestBody Map<String,String> map){
@@ -132,6 +166,8 @@ public class CommonController {
         }
     }
 
+    @ApiOperation(value = "获取已加入群组")
+    @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String")
     @ResponseBody
     @GetMapping("/group/getGroupByMember")
     public String getGroupByMember(String openid){
@@ -139,6 +175,8 @@ public class CommonController {
         return LogResult.success(list);
     }
 
+    @ApiOperation(value = "获取群组内专属普通活动")
+    @ApiImplicitParam(name = "groupId", value = "群组id", required = true, dataType = "String")
     @ResponseBody
     @GetMapping("/group/getActivityByGroup")
     public String getActivityByGroup(String groupId){
@@ -146,6 +184,8 @@ public class CommonController {
         return LogResult.success(list);
     }
 
+    @ApiOperation(value = "获取群组内专属信息收集活动")
+    @ApiImplicitParam(name = "groupId", value = "群组id", required = true, dataType = "String")
     @ResponseBody
     @GetMapping("/group/getGatherByGroup")
     public String getGatherByGroup(String groupId){
@@ -153,6 +193,8 @@ public class CommonController {
         return LogResult.success(list);
     }
 
+    @ApiOperation(value = "获取信息收集活动详情信息")
+    @ApiImplicitParam(name = "id", value = "信息收集活动id", required = true, dataType = "String")
     @ResponseBody
     @GetMapping("/homePage/getGatherDetails")
     public String getGatherDetails(String id) throws NullPointerException{

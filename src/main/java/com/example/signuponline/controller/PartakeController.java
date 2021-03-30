@@ -6,6 +6,10 @@ import com.example.signuponline.bean.UserFlag;
 import com.example.signuponline.common.IdController;
 import com.example.signuponline.common.LogResult;
 import com.example.signuponline.service.PartakeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,7 @@ import java.util.Map;
  * @author yudh
  * @date 2021-03-21 14:26:08
  */
+@Api(value =  "参与者操作接口")
 @Slf4j
 @RestController
 @RequestMapping("/partake")
@@ -28,6 +33,11 @@ public class PartakeController {
     @Autowired
     private PartakeService partakeService;
 
+    @ApiOperation(value = "获取个人创建的群组")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String",paramType = "body"),
+            @ApiImplicitParam(name = "activityId", value = "活动id", required = true, dataType = "String",paramType = "body")
+    })
     @ResponseBody
     @PostMapping("/collect")
     public String collect(@RequestBody Map<String,Object> map){
@@ -41,6 +51,8 @@ public class PartakeController {
 
     }
 
+    @ApiOperation(value = "获取个人收藏的活动列表")
+    @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String")
     @ResponseBody
     @GetMapping("/getCollect")
     public String getCollect(String openid){
@@ -48,6 +60,11 @@ public class PartakeController {
         return LogResult.success(list);
     }
 
+    @ApiOperation(value = "报名参加普通报名活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "activityId", value = "活动id", required = true, dataType = "String")
+    })
     @ResponseBody
     @PostMapping("/generalPartake")
     public String generalPartake(@RequestBody Map<String,Object> map){
@@ -60,6 +77,16 @@ public class PartakeController {
         }
     }
 
+    @ApiOperation(value = "报名信息收集活动")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "gatherId", value = "信息收集活动id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "inputList", value = "输入框标题与对应的值", required = true, dataType = "Map"),
+            @ApiImplicitParam(name = "selectList", value = "单选框标题与对应的值", required = true, dataType = "Map"),
+            @ApiImplicitParam(name = "selectMulList", value = "多选框标题与对应的值", required = true, dataType = "Map"),
+            @ApiImplicitParam(name = "areaList", value = "输文本区标题与对应的值", required = true, dataType = "Map"),
+            @ApiImplicitParam(name = "address", value = "地址", required = true, dataType = "String")
+    })
     @ResponseBody
     @PostMapping("/gatherPartake")
     public String gatherPartake(@RequestBody Map<String,Object> map){
@@ -70,6 +97,11 @@ public class PartakeController {
         return LogResult.success();
     }
 
+    @ApiOperation(value = "普通活动详情页查询是否收藏和报名")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "activityId", value = "活动id", required = true, dataType = "String")
+    })
     @ResponseBody
     @GetMapping("/getFlag")
     public String getUserFlag(String openid,Integer activityId){
@@ -78,6 +110,11 @@ public class PartakeController {
         return LogResult.success(userFlag);
     }
 
+    @ApiOperation(value = "信息收集活动详情页查询是否收藏和报名")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "gatherId", value = "信息收集活动id", required = true, dataType = "String")
+    })
     @ResponseBody
     @GetMapping("/getGatherFlag")
     public String getGatherFlag(String openid,String gatherId){
@@ -85,6 +122,8 @@ public class PartakeController {
         return LogResult.success(userFlag);
     }
 
+    @ApiOperation(value = "获取个人参与的活动")
+    @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String")
     @ResponseBody
     @GetMapping("/getMyParticipation")
     public String getMyParticipation(String openid){

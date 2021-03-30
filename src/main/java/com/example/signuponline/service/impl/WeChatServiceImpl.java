@@ -32,4 +32,9 @@ public class WeChatServiceImpl implements WeChatService {
     public void login(Map<String,String> map) {
         weChatMapper.login(map);
     }
+
+    @Override
+    public User saveWeChatUser(String code) {
+        return null;
+    }
 }

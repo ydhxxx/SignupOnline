@@ -46,14 +46,40 @@ public class PublishServiceImpl implements PublishService {
     }
 
     @Override
-    public List<Activity> getMyActivity(String openid) {
+    public List<Activity> getMyActivity(String openid,boolean isAll) {
+        if(isAll){
+            return publishMapper.getMyActivity(openid);
+        }
         List<Activity> list=publishMapper.getMyActivity(openid);
         return ActivityFormat.format(list);
     }
 
     @Override
-    public List<GatherActivity> getMyGather(String openid) {
+    public List<GatherActivity> getMyGather(String openid,boolean isAll) {
+        if(isAll){
+            return publishMapper.getMyGather(openid);
+        }
         List<GatherActivity> list=publishMapper.getMyGather(openid);
         return ActivityFormat.formatForGather(list);
+    }
+
+    @Override
+    public boolean delActivity(Integer id) {
+        return publishMapper.delActivity(id);
+    }
+
+    @Override
+    public boolean updateActivity(Map<String, String> map) {
+        return publishMapper.updateActivity(map);
+    }
+
+    @Override
+    public boolean delGather(String id) {
+        return publishMapper.delGather(id);
+    }
+
+    @Override
+    public boolean updateGather(Map<String, String> map) {
+        return publishMapper.updateGather(map);
     }
 }

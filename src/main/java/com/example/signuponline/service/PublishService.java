@@ -46,9 +46,10 @@ public interface PublishService {
     /**
      * 获取个人发布的普通活动
      * @param openid openid
+     * @param isAll 是否为网站加载全部数据
      * @return list 普通活动列表
      */
-    List<Activity> getMyActivity(String openid);
+    List<Activity> getMyActivity(String openid,boolean isAll);
 
 
     /**
@@ -56,6 +57,33 @@ public interface PublishService {
      * @param openid openid
      * @return list 收集活动列表
      */
-    List<GatherActivity> getMyGather(String openid);
+    List<GatherActivity> getMyGather(String openid,boolean isAll);
 
+    /**
+     * 删除普通报名活动
+     * @param id 活动id
+     * @return bool 是否删除成功
+     */
+    boolean delActivity(Integer id);
+
+    /**
+     * 修改普通报名活动
+     * @param map 活动信息
+     * @return bool 是否删除成功
+     */
+    boolean updateActivity(Map<String, String> map);
+
+    /**
+     * 删除信息收集报名活动
+     * @param id 活动id
+     * @return bool 是否删除成功
+     */
+    boolean delGather(String id);
+
+    /**
+     * 修改信息收集报名活动
+     * @param map 活动信息
+     * @return bool 是否删除成功
+     */
+    boolean updateGather(Map<String, String> map);
 }

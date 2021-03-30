@@ -1,10 +1,7 @@
 package com.example.signuponline.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import com.alibaba.fastjson.JSONObject;
 import java.util.Map;
 
 /**
@@ -17,11 +14,10 @@ public class JsonToMap {
         /**
            * json字符串转map
            *
-           * @param jsonStr
-           * @return
+           * @param jsonStr 字符串
+           * @return map
             */
       public static Map<String, Object> jsonToMap(String jsonStr) {
-          Map stringToMap =  JSONObject.parseObject(jsonStr);
-          return stringToMap;
+          return JSONObject.parseObject(jsonStr);
      }
 }

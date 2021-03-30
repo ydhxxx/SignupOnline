@@ -5,7 +5,7 @@
 <mapper namespace="com.example.signuponline.mapper.PublishMapper">
 
     <!-- 发布新的活动-->
-    <select id="newActivity" parameterType="com.example.signuponline.bean.Activity">
+    <insert id="newActivity" parameterType="String">
 
         INSERT INTO `activity`
         ( `openid`, `title`, `content`, `type1`, `type2`, `start_time`, `end_time`, `address`, `poster_url`, `detail_url`, `group_id` )
@@ -21,7 +21,7 @@
                         </otherwise>
                     </choose>
                        );
-    </select>
+    </insert>
 
     <!-- 获取个人创建的群组-->
     <select id="getMyGroup" parameterType="String" resultType="com.example.signuponline.bean.Group">
@@ -32,7 +32,8 @@
 
     </select>
 
-    <!-- 创建信息收集表-->
+
+    <!-- 创建信息收集活动-->
     <insert id="newGather" parameterType="String" >
 
         INSERT INTO `gather` ( `id`, `openid`, `title`, `poster_url`,`start_time`,`end_time`, `group_id` )
@@ -97,12 +98,15 @@
         SELECT
             a.`id`,
             a.`title`,
+            a.`content`,
+            a.`group_id`,
             a.`type1`,
             a.`type2`,
             a.`address`,
             a.`start_time`,
             a.`end_time`,
             a.`poster_url`,
+            a.`detail_url`,
             COUNT( b.`activity_id` ) AS persons
         FROM
             (SELECT * from `activity` where  `openid`=#{openid} ) a
@@ -127,5 +131,68 @@
         GROUP BY a.`id`;
 
     </select>
+
+    <!-- 删除活动 -->
+    <delete id="delActivity">
+
+        DELETE FROM `activity` WHERE `id`=#{id};
+
+    </delete>
+
+    <!-- 修改普通报名活动-->
+    <update id="updateActivity" parameterType="String">
+
+        UPDATE `activity`
+            SET `title` = #{map.title},
+            `content` = #{map.content},
+            `type1` = #{map.type1},
+            `type2` = #{map.type2},
+            `start_time` = #{map.startTime},
+            `end_time` = #{map.endTime},
+            `address` = #{map.address},
+            `poster_url` = #{map.posterUrl},
+            `detail_url` = #{map.detailUrl},
+            `group_id` =
+                <choose>
+                    <when test="map.groupId==''">
+                        NULL
+                    </when>
+                    <otherwise>
+                        #{map.groupId}
+                    </otherwise>
+                </choose>
+            WHERE
+                `id` = #{map.id};
+
+    </update>
+
+    <!-- 删除信息收集报名活动-->
+    <delete id="delGather">
+
+        DELETE FROM `gather` WHERE `id`=#{id};
+
+    </delete>
+
+    <!-- 修改信息收集报名活动-->
+    <update id="updateGather" parameterType="String">
+
+        UPDATE `gather`
+        SET `title` = #{map.title},
+        `start_time` = #{map.startTime},
+        `end_time` = #{map.endTime},
+        `poster_url` = #{map.posterUrl},
+        `group_id` =
+        <choose>
+            <when test="map.groupId==''">
+                NULL
+            </when>
+            <otherwise>
+                #{map.groupId}
+            </otherwise>
+        </choose>
+        WHERE
+        `id` = #{map.id};
+
+    </update>
 
 </mapper>
