@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+
+    <link rel="stylesheet" href="/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/toastr/toastr.min.css">
+    <link href="/bootstrap/bootstrapvalidator-master/dist/css/bootstrapValidator.min.css" rel="stylesheet" />
+
+    <script src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/toastr/toastr.min.js"></script>
+    <script src="/bootstrap/bootstrapvalidator-master/dist/js/bootstrapValidator.min.js"></script>
+
+    <style>
+
+        .container{
+            margin-top: 150px;
+        }
+        .form-ins{
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            box-shadow: none;
+            padding: 0 20px 0 45px;
+            height: 40px;
+            transition: all 0.3s ease 0s;
+        }
+        .form-ins:focus{
+            background: #e0e0e0;
+            box-shadow: none;
+            outline: 0 none;
+        }
+
+        .form-ins:focus + i{
+            color: #00b4ef;
+        }
+        body {
+            background: url("/image/backgroundimg.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .form-control-feedback{
+            left: 5px;
+            top:3px;
+        }
+
+    </style>
+    <script>
+        $(function () {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                timeOut: "1500",
+                positionClass: " toast-top-center",
+            };
+
+            $('#form').bootstrapValidator({
+
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    //valid: 'glyphicon glyphicon-ok',
+                    //invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    number: {
+                        validators: {
+                            notEmpty: {
+                                message: '账号不能为空!'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空!'
+                            }
+                        }
+                    }
+                }
+            });
+            $('#login').click(function (){
+                var bootstrapValidator = $("#form").data('bootstrapValidator');
+                //执行校验
+                bootstrapValidator.validate();
+                if(bootstrapValidator.isValid()) {
+                    $.ajax({
+                        "type": "POST",
+                        "url": "/wechat/loginWeb",
+                        "contentType": "application/json;charset=utf-8",
+                        "dataType":"json",
+                        "data":JSON.stringify({
+                            "number": $('#number').val(),
+                            "password": $('#password').val()
+                        }),
+                        "success": function (msg) {
+                            if (msg.code==0) {
+                                toastr.success("登录成功!");
+                                setTimeout(function(){
+                                    window.location.href="success";
+                                },1000);
+
+                            }
+                            else {
+                                toastr.error(msg.msg);
+                            }
+                        },
+                        "error": function () {
+                            alert("登录失败");
+                        }
+                    });
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align: center;">用 户 登 录</h2>
+        <hr style="width:650px;">
+        <div class="row">
+            <form role="form" id="form" class="form-horizontal col-md-offset-4 col-md-4">
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <input type="text" class="form-control form-ins" id="number" name="number" placeholder="账号">
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <input type="password" class="form-control form-ins" id="password" name="password" placeholder="密码">
+                </div>
+                <div class="form-group">
+                    <button type="button" id="login" class="btn btn-primary btn-block">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

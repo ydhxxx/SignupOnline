@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <link rel="stylesheet" href="/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/bootstrap-3.3.7-dist/css/mycss.css">
+    <link rel="stylesheet" href="/bootstrap/bTabs-master/b.tabs.css">
+
+    <script src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.7-dist/js/main.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.7-dist/js/modernizr.js"></script>
+    <script src="/bootstrap/bootstrap-treeview-master/dist/bootstrap-treeview.min.js"></script>
+
+    <script src="/bootstrap/bTabs-master/b.tabs.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            var init = function(data){
+                return $("#div").treeview({
+                    data:data,
+                    color: "white",
+                    backColor: "Transparent",
+                    onhoverColor: "PowderBlue",
+                    showBorder: false,
+                    //nodeIcon:"glyphicon glyphicon-book",
+                    levels:2,
+                    onNodeSelected:function(event, data) {
+                        //alert(data.text);
+                        $('#mainFrameTabs').bTabsAdd(data.id,data.text,data.url);
+                        //calcHeight();
+                    },
+                    onNodeUnselected:function(event,node){
+                        console.log("取消了");
+                    }
+                });
+            }
+            var datas=[
+                {
+                    "id":"0",
+                    "text":"个人信息",
+                    "url":"/project",
+                    "icon":"glyphicon glyphicon-user"
+                },
+                {
+                    "id":"1",
+                    "text":" 我的发布",
+                    "selectable":false,
+                    "nodes":[{
+                        "id":"2",
+                        "text":"普通报名活动",
+                        "url":"/activity"
+                        },
+                        {
+                            "id":"3",
+                            "text":"信息收集活动",
+                            "url":"/gather"
+                        }]
+                },
+                {
+                    "id":"4",
+                    "text":"活动详情",
+                    "selectable":false,
+                    "nodes":[{
+                        "id":"3",
+                        "text":"动态加入所有活动",
+                        "url":"/destination"
+                    }]
+                }]
+
+            init(datas);
+
+            //bTabs组件初始化
+            $('#mainFrameTabs').bTabs();
+
+        });
+
+
+    </script>
+</head>
+
+<body>
+
+<div class="superWrap clearfix" style="height: 800px;">
+    <!--side S-->
+    <div class="super-side-menu">
+        <div width="205" height="100%" marginheight="0" marginwidth="0" frameborder="0" scrolling="no">
+            <div class="super-side-menu">
+                <div class="logo" style="background-color: white;"></div>
+                <div id="div">
+
+                </div>
+                <div class="side-menu" id="div">
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!--side E-->
+    <!--content S-->
+    <div class="superContent">
+        <div class="super-header super-header2">
+            <div id="Pubheader" name="Pubheader" width="100%"  marginheight="0" marginwidth="0" frameborder="0" scrolling="no">
+                <div class="super-header clearfix">
+                    <h2>基于微信小程序的“在线报名”管理系统</h2>
+                    <div class="head-right">
+                        <i class="ico-user"></i>当前用户：
+                        <image style="width:60px;height:60px;margin-top:-19px;" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLsVHib2j78AAQv70hLEUj15bnr14HZPgdAqmbmZ2VyqxRGDYON1s7K4IoibbskKBW2s5v3RYbYEeVA/132">
+                        <div class="userslideDown">
+                            <a href="javascript:;" class="superUser">
+                                <!--<span th:text="${name}">余冬海</span>-->
+                                叽里咕噜
+                                <i class="ico-tri"></i>
+                            </a>
+                            <div class="slidedownBox">
+                                <ul>
+                                    <li><a href="" target="Mainindex">修改密码</a></li>
+                                    <li iconCls="glyphicon glyphicon-log-out">
+                                        <a href="/" target="_parent">退出&nbsp;<span class="glyphicon glyphicon-log-out"></span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--header-->
+        <div class="superCtab superCtabBot" style="height: 695px;">
+            <div id="Mainindex" name="Mainindex" width="100%" height="100%" marginheight="0" marginwidth="0" frameborder="0">
+                <div class="col-xs-8 col-md-10" style="width:100%; height:100%;padding:8px" id="mainFrameTabs">
+                    <!-- 选项卡 -->
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <!-- 设置默认的首页标签页，设置noclose样式，则不会被关闭 -->
+                        <li role="presentation" class="active noclose"><a href="#bTabs_navTabsMainPage" data-toggle="tab">首页</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="height: 660px;">
+                        <!-- 默认标签页（首页）的内容区域 -->
+                        <div class="tab-pane active" id="bTabs_navTabsMainPage" >
+
+                            <div class="text-primary">
+                                <div class="jumbotron">
+                                    <h1>Hello!</h1>
+                                    <p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。
+                                        该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。
+                                        通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--content E-->
+
+</div>
+
+</body>
+</html>
