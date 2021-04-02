@@ -1,14 +1,14 @@
 package com.example.signuponline.service.impl;
 
-import com.example.signuponline.bean.Activity;
-import com.example.signuponline.bean.GatherActivity;
-import com.example.signuponline.bean.Group;
+import com.example.signuponline.bean.*;
 import com.example.signuponline.mapper.PublishMapper;
 import com.example.signuponline.service.PublishService;
 import com.example.signuponline.util.ActivityFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,5 +81,61 @@ public class PublishServiceImpl implements PublishService {
     @Override
     public boolean updateGather(Map<String, String> map) {
         return publishMapper.updateGather(map);
+    }
+
+    @Override
+    public List<Object> getAcPartake(int id) {
+        return publishMapper.getAcPartake(id);
+    }
+
+    @Override
+    public List<Object> getField(String id) {
+        List<GatherField> field=publishMapper.getField(id);
+        List<Object> list=new ArrayList<>();
+        Map<String,Object> check=new HashMap<>();
+        check.put("checkbox",true);
+        list.add(check);
+        for(GatherField gatherField :field){
+            Map<String,Object> map=new HashMap<>();
+            map.put("field",String.valueOf(gatherField.getId()));
+            map.put("title",gatherField.getField());
+            map.put("align","center");
+            map.put("valign","middle");
+            list.add(map);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Object> getGaPartake(String id) {
+        List<GatherAnswer> list=publishMapper.getGaPartake(id);
+        HashMap<String,Integer> openids=new HashMap<>();
+        List<Object> valueList=new ArrayList<>();
+        for(GatherAnswer gatherAnswer:list){
+            String openid=gatherAnswer.getOpenid();
+            if(openids.containsKey(openid)){
+                int i=openids.get(openid);
+                openids.put(openid,i+1);
+            }
+            else{
+                openids.put(openid,1);
+
+            }
+        }
+        Map<String,Object> map=new HashMap<>();
+        for(GatherAnswer gatherAnswer:list){
+            String openid=gatherAnswer.getOpenid();
+            int fieldId=gatherAnswer.getId();
+            map.put(String.valueOf(fieldId),gatherAnswer.getValue());
+            int i=openids.get(openid);
+
+            if(i==1){
+                valueList.add(map);
+                map=new HashMap<>();
+            }
+            openids.put(openid,i-1);
+        }
+        return valueList;
     }
 }

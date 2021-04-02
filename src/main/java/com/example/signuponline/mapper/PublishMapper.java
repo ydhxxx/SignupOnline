@@ -1,8 +1,6 @@
 package com.example.signuponline.mapper;
 
-import com.example.signuponline.bean.Activity;
-import com.example.signuponline.bean.GatherActivity;
-import com.example.signuponline.bean.Group;
+import com.example.signuponline.bean.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -86,4 +84,25 @@ public interface PublishMapper {
      * @return bool 是否删除成功
      */
     boolean updateGather(@Param("map") Map<String, String> map);
+
+    /**
+     * 获取普通活动报名信息
+     * @param id 活动id
+     * @return list 参与列表
+     */
+    List<Object> getAcPartake(@Param("id") int id);
+
+    /**
+     * 获取信息收集活动字段
+     * @param id 活动id
+     * @return list 字段列表
+     */
+    List<GatherField> getField(@Param("id") String id);
+
+    /**
+     * 获取信息收集活动报名信息
+     * @param id 活动id
+     * @return list 参与列表
+     */
+    List<GatherAnswer> getGaPartake(@Param("id") String id);
 }

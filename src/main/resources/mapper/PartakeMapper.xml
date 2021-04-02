@@ -59,39 +59,39 @@
     <!-- 报名信息收集活动-->
     <insert id="partakeGather">
 
-        INSERT INTO `gather_partake` ( `openid`, `gather_id`, `field`, `type`, `value` )
+        INSERT INTO `gather_partake` ( `openid`, `gather_id`, `field`, `type`, `value`,`create_time` )
         VALUES
         <choose>
             <when test="map.inputList.size>0">
                 <foreach collection="map.inputList" item="item"  separator=",">
-                    (#{map.openid},#{map.gatherId}, #{item.name},0,#{item.value})
+                    (#{map.openid},#{map.gatherId}, #{item.name},0,#{item.value},current_timestamp())
                 </foreach>
             </when>
         </choose>
         <choose>
             <when test="map.selectList.size>0">
                 ,<foreach collection="map.selectList" item="item" separator=",">
-                (#{map.openid},#{map.gatherId}, #{item.name},1,#{item.value})
+                (#{map.openid},#{map.gatherId}, #{item.name},1,#{item.value},current_timestamp())
             </foreach>
             </when>
         </choose>
         <choose>
             <when test="map.selectMulList.size>0">
                 ,<foreach collection="map.selectMulList" item="item" separator=",">
-                (#{map.openid},#{map.gatherId}, #{item.name},2,#{item.value})
+                (#{map.openid},#{map.gatherId}, #{item.name},2,#{item.value},current_timestamp())
             </foreach>
             </when>
         </choose>
         <choose>
             <when test="map.areaList.size>0">
                 ,<foreach collection="map.areaList" item="item"  separator=",">
-                (#{map.openid},#{map.gatherId}, #{item.name},3,#{item.value})
+                (#{map.openid},#{map.gatherId}, #{item.name},3,#{item.value},current_timestamp())
             </foreach>
             </when>
         </choose>
         <choose>
             <when test="map.isAddress==true">
-                ,(#{map.openid},#{map.gatherId}, '地址',4,#{map.address});
+                ,(#{map.openid},#{map.gatherId}, '地址',4,#{map.address},current_timestamp());
             </when>
         </choose>
         ;

@@ -1,8 +1,6 @@
 package com.example.signuponline.controller;
 
-import com.example.signuponline.bean.Activity;
-import com.example.signuponline.bean.GatherActivity;
-import com.example.signuponline.bean.Group;
+import com.example.signuponline.bean.*;
 import com.example.signuponline.common.IdController;
 import com.example.signuponline.common.LogEntity;
 import com.example.signuponline.common.LogResult;
@@ -194,4 +192,68 @@ public class PublishController {
             return LogResult.failed("修改失败，请重试");
         }
     }
+
+    @ApiOperation(value = "获取个人已发布的所有报名活动")
+    @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String")
+    @ResponseBody
+    @GetMapping("/getAllActivity")
+    public String getAllActivity(String openid){
+        List<Activity> activityList=publishService.getMyActivity(openid,true);
+        List<GatherActivity> gatherList=publishService.getMyGather(openid,true);
+        Map<String,Object> map=new HashMap<>();
+        List<Object> nodes=new ArrayList<>();
+
+        map.put("id","4");
+        map.put("text","活动参与详情");
+        map.put("selectable",false);
+        int i=5;
+        for(Activity activity :activityList){
+            Map<String,Object> node=new HashMap<>(4);
+            node.put("id",i++);
+            node.put("text",activity.getTitle());
+            node.put("url","partakes?type="+1+"&title="+activity.getTitle()+"&id="+activity.getId());
+            nodes.add(node);
+        }
+        for(GatherActivity gather :gatherList){
+            Map<String,Object> node=new HashMap<>(4);
+            node.put("id",i++);
+            node.put("text",gather.getTitle());
+            node.put("url","partakes?type="+2+"&title="+gather.getTitle()+"&id="+gather.getId());
+            nodes.add(node);
+        }
+        map.put("nodes",nodes);
+        return LogResult.success(map);
+    }
+
+
+    @ApiOperation(value = "获取普通活动报名信息")
+    @ApiImplicitParam(name = "id", value = "活动id", required = true, dataType = "String")
+    @ResponseBody
+    @GetMapping("/getAcPartake")
+    public String getAcPartake(String id){
+        List<Object> list=publishService.getAcPartake(Integer.parseInt(id));
+        return LogResult.success(list);
+    }
+
+
+    @ApiOperation(value = "获取信息收集活动字段")
+    @ApiImplicitParam(name = "id", value = "活动id", required = true, dataType = "String")
+    @ResponseBody
+    @GetMapping("/getField")
+    public String getField(String id){
+        List<Object> list=publishService.getField(id);
+        return LogResult.success(list);
+    }
+
+
+    @ApiOperation(value = "获取信息收集活动报名信息")
+    @ApiImplicitParam(name = "id", value = "活动id", required = true, dataType = "String")
+    @ResponseBody
+    @GetMapping("/getGaPartake")
+    public String getGaPartake(String id){
+        List<Object> list=publishService.getGaPartake(id);
+        return LogResult.success(list);
+    }
+
+
 }

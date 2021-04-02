@@ -21,6 +21,49 @@
 
     <script type="text/javascript">
         $(function(){
+            $.ajax({
+                "type": "GET",
+                "url" : "publish/getAllActivity",
+                // "contentType": "application/json;charset=utf-8",
+                "dataType":"json",
+                "data":{
+                    "openid":'oHY_74pl-fkDrIbxvxkfxzqws3D4'
+                },
+                "success": function (msg) {
+                    console.log(msg.data);
+                    var tabs=[
+                        {
+                            "id":"0",
+                            "text":"个人信息",
+                            "url":"/project",
+                            "icon":"glyphicon glyphicon-user"
+                        },
+                        {
+                            "id":"1",
+                            "text":" 我的发布",
+                            "selectable":false,
+                            "nodes":[{
+                                "id":"2",
+                                "text":"普通报名活动",
+                                "url":"/activity"
+                            },
+                                {
+                                    "id":"3",
+                                    "text":"信息收集活动",
+                                    "url":"/gather"
+                                }]
+                        }
+                        ];
+                    tabs.push(msg.data);
+                    init(tabs);
+
+                    //bTabs组件初始化
+                    $('#mainFrameTabs').bTabs();
+                },
+                "error":function () {
+                    alert("加载失败");
+                }
+            });
             var init = function(data){
                 return $("#div").treeview({
                     data:data,
@@ -29,7 +72,7 @@
                     onhoverColor: "PowderBlue",
                     showBorder: false,
                     //nodeIcon:"glyphicon glyphicon-book",
-                    levels:2,
+                    levels:0,
                     onNodeSelected:function(event, data) {
                         //alert(data.text);
                         $('#mainFrameTabs').bTabsAdd(data.id,data.text,data.url);
@@ -40,48 +83,18 @@
                     }
                 });
             }
-            var datas=[
-                {
-                    "id":"0",
-                    "text":"个人信息",
-                    "url":"/project",
-                    "icon":"glyphicon glyphicon-user"
-                },
-                {
-                    "id":"1",
-                    "text":" 我的发布",
-                    "selectable":false,
-                    "nodes":[{
-                        "id":"2",
-                        "text":"普通报名活动",
-                        "url":"/activity"
-                        },
-                        {
-                            "id":"3",
-                            "text":"信息收集活动",
-                            "url":"/gather"
-                        }]
-                },
-                {
-                    "id":"4",
-                    "text":"活动详情",
-                    "selectable":false,
-                    "nodes":[{
-                        "id":"3",
-                        "text":"动态加入所有活动",
-                        "url":"/destination"
-                    }]
-                }]
 
-            init(datas);
-
-            //bTabs组件初始化
-            $('#mainFrameTabs').bTabs();
 
         });
 
 
     </script>
+    <style>
+        .scoll{
+            height:714px;overflow-y:scroll;
+        }
+        .scoll::-webkit-scrollbar{display:none;}
+    </style>
 </head>
 
 <body>
@@ -92,7 +105,7 @@
         <div width="205" height="100%" marginheight="0" marginwidth="0" frameborder="0" scrolling="no">
             <div class="super-side-menu">
                 <div class="logo" style="background-color: white;"></div>
-                <div id="div">
+                <div id="div" class="scoll">
 
                 </div>
                 <div class="side-menu" id="div">

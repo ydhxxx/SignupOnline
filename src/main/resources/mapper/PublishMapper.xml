@@ -195,4 +195,54 @@
 
     </update>
 
+    <resultMap type="java.util.HashMap" id="AcPartake">
+
+        <id column="id" property="id" javaType="int" jdbcType="INTEGER"/>
+        <result column="title" property="title" javaType="String" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 获取普通活动报名信息-->
+    <select id="getAcPartake" parameterType="int" resultMap="AcPartake">
+
+        SELECT
+            a.`id`,
+            b.`title`,
+            c.`nick_name`
+        FROM
+            `general_partake` a
+            JOIN `activity` b ON a.`activity_id` = b.`id`
+            JOIN `user` c ON a.`openid` = c.`openid`  AND a.`activity_id`=#{id};
+
+    </select>
+
+    <!-- 获取信息收集活动字段-->
+    <select id="getField" resultType="com.example.signuponline.bean.GatherField">
+
+        SELECT
+            `id`,
+            `field`
+        FROM
+            `gather_field`
+        WHERE
+            `gather_id` = #{id};
+
+    </select>
+
+    <!-- 获取信息收集活动报名信息-->
+    <select id="getGaPartake" resultType="com.example.signuponline.bean.GatherAnswer">
+
+        SELECT
+            a.`id`,
+            b.`value`,
+            b.`openid`
+        FROM
+            `gather_field` a
+            JOIN `gather_partake` b ON a.`field` = b.`field`
+            AND a.`type` = b.`type`
+            AND a.`gather_id` = b.`gather_id`
+            AND a.`gather_id` = #{id}
+            ORDER BY b.`openid`;
+
+    </select>
 </mapper>

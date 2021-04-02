@@ -3,6 +3,7 @@ package com.example.signuponline.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 
 /**
  *  页面请求
@@ -34,6 +35,18 @@ public class PageController {
     @GetMapping(value ="/gather")
     public String showGather(){return "gather";}
 
+
+    @GetMapping(value ="/partakes")
+    public String partakes(Model model,int type,String title,String id){
+        model.addAttribute("title",title);
+        model.addAttribute("id",id);
+        if(type==1){
+            return "activityPartake";
+        }
+        else{
+            return "gatherPartake";
+        }
+    }
 
     @GetMapping(value = "/404")
     public String pageNotFound(){

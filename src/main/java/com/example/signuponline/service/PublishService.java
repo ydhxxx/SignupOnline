@@ -1,8 +1,6 @@
 package com.example.signuponline.service;
 
-import com.example.signuponline.bean.Activity;
-import com.example.signuponline.bean.GatherActivity;
-import com.example.signuponline.bean.Group;
+import com.example.signuponline.bean.*;
 
 import java.util.List;
 import java.util.Map;
@@ -86,4 +84,25 @@ public interface PublishService {
      * @return bool 是否删除成功
      */
     boolean updateGather(Map<String, String> map);
+
+    /**
+     * 获取普通活动报名信息
+     * @param id 活动id
+     * @return list 参与列表
+     */
+    List<Object> getAcPartake(int id);
+
+    /**
+     * 获取信息收集活动字段
+     * @param id 活动id
+     * @return list 字段列表
+     */
+    List<Object> getField(String id);
+
+    /**
+     * 获取信息收集活动报名信息
+     * @param id 活动id
+     * @return list 参与列表
+     */
+    List<Object> getGaPartake(String id);
 }
