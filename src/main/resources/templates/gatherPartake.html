@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap-3.3.7-dist/css/style.css" />
+    <link rel="stylesheet" href="../bootstrap/bootstrap-table-master/dist/bootstrap-table.min.css" />
+    <link href="/bootstrap/bootstrap-fileinput-master/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../bootstrap/toastr/toastr.min.css">
+    <link href="/bootstrap/bootstrapValidator-master/dist/css/bootstrapValidator.min.css" rel="stylesheet" />
+
+    <script src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.7-dist/js/main.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.7-dist/js/modernizr.js"></script>
+    <script src="/bootstrap/bTabs-master/b.tabs.min.js"></script>
+    <script src="/bootstrap/bootstrap-treeview-master/dist/bootstrap-treeview.min.js"></script>
+    <script src="/bootstrap/bootstrap-table-master/dist/bootstrap-table.js"></script>
+    <script src="/bootstrap/bootstrap-table-master/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="/bootstrap/bootstrap-fileinput-master/js/fileinput.min.js"></script>
+    <script src="/bootstrap/bootstrap-fileinput-master/js/locales/zh.js"></script>
+    <script src="/bootstrap/toastr/toastr.min.js"></script>
+    <script src="/bootstrap/tableExport.jquery.plugin-master/tableExport.min.js"></script>
+    <script src="/bootstrap/tableExport.jquery.plugin-master/libs/js-xlsx/xlsx.core.min.js"></script>
+    <script src="/bootstrap/tableExport.jquery.plugin-master/libs/FileSaver/FileSaver.min.js"></script>
+    <script src="/bootstrap/bootstrapValidator-master/dist/js/bootstrapValidator.min.js"></script>
+    <script src="/bootstrap/bootstrapValidator-master/dist/js/language/zh_CN.js"></script>
+
+
+
+    <script th:inline="javascript">
+        function getColumn() {
+            $.ajax({
+                "type": "GET",
+                "url" : "/publish/getField",
+                // "contentType": "application/json;charset=utf-8",
+                "dataType":"json",
+                "data":{
+                    "id":[[${id}]]
+                },
+                "success": function (msg) {
+                    console.log(msg.data);
+                    init("/publish/getGaPartake",msg.data);
+                },
+                "error":function () {
+                    alert("加载失败");
+                }
+            });
+        }
+        function init(newUrl1,column){
+            $('#table').bootstrapTable({
+                ajax : function (request) {
+                    $.ajax({
+                        "type": "GET",
+                        "url" : newUrl1,
+                        // "contentType": "application/json;charset=utf-8",
+                        "dataType":"json",
+                        "data":{
+                            "id":[[${id}]]
+                        },
+                        "success": function (msg) {
+                            console.log(msg.data);
+                            request.success({
+                                total:msg.data.length,
+                                row: msg.data
+                            });
+                            $('#table').bootstrapTable('load', msg.data);
+                        },
+                        "error":function (msg) {
+                            console.log(msg);
+                            alert("加载失败");
+                        }
+                    });
+                },
+                toolbar:"#toolbar",
+                toolbarAlign:'left',//工具栏的位置
+                singleSelect:true,
+                clickToSelect:true,
+                sortName: "id",
+                sortOrder: "asc",
+                pageSize:25,
+                pageNumber: 1,
+                sidePagination: "client",//客户端分页
+                showLoading:false,
+                pageList: "[10, 25, 50, 100]",
+                showRefresh: true,
+                showColumns: true,
+
+
+                showExport: true,                    //是否显示导出按钮
+                exportDataType: "all",              //basic', 'all', 'selected'.
+                exportTypes:['excel','xlsx'],	    //导出类型
+                exportButton: $('#btn_export'),
+                search: true,
+                cache:false,
+                pagination: true,
+                paginationLoop:false,
+                columns:column
+
+            });
+        }
+
+        $(function () {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                timeOut: "1500",
+                positionClass: " toast-top-center",
+            };
+            getColumn();
+
+            $('#btn_update').click(function () {
+                var row=$("#table").bootstrapTable('getSelections');
+                if(row[0]==null)
+                    toastr.info("请选择一条记录进行修改操作!");
+                else{
+                    console.log(row[0]);
+                    $('#title').val(row[0].title);
+                    $('#startTime').val(row[0].startTime);
+                    $('#endTime').val(row[0].endTime);
+                    // $('#groupId').val(row[0].groupId);
+                    $('#posterUrl').val(row[0].posterUrl);
+
+                    $('#updateModal').modal('show');
+                }
+            });
+            $('#btn_export').click(function () {
+                $('#table').tableExport({
+                    type: 'xlsx',
+                    exportDataType: "all",
+                    ignoreColumn: [0],//忽略某一列的索引
+                    fileName: [[${title}]],//下载文件名称
+                    onCellHtmlData: function (cell, row, col, data){
+                        //处理导出内容,自定义某一行、某一列、某个单元格的内容
+                        return data;
+                    },
+                });
+            });
+
+            $('#updateForms').bootstrapValidator({
+
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    title: {
+                        message: '修改失败',
+                        validators: {
+                            notEmpty: {
+                                message: '主题不能为空'
+                            }
+                        }
+                    },
+                    startTime: {
+                        message: '修改失败',
+                        validators: {
+                            notEmpty: {
+                                message: '开始时间不能为空'
+                            }
+                        }
+                    },
+                    endTime: {
+                        message: '修改失败',
+                        validators: {
+                            notEmpty: {
+                                message: '结束时间不能为空'
+                            }
+                        }
+                    },
+                    posterUrl: {
+                        message: '修改失败',
+                        validators: {
+                            notEmpty: {
+                                message: '活动海报地址不能为空'
+                            }
+                        }
+                    }
+
+                }
+            });
+
+            $('#subUpdate').click(function () {
+                var bootstrapValidator = $("#updateForms").data('bootstrapValidator');
+                //执行校验
+                bootstrapValidator.validate();
+                if(bootstrapValidator.isValid()) {
+                    $.ajax({
+                        "type": "POST",
+                        "url": "/publish/updateGather",
+                        "contentType": "application/json;charset=utf-8",
+                        "dataType": "json",
+                        "data": JSON.stringify({
+                            "id":$("#table").bootstrapTable('getSelections')[0].id,
+                            "title":$('#title').val(),
+                            "startTime":$('#startTime').val(),
+                            "endTime":$('#endTime').val(),
+                            // "groupId":$('#groupId').val(),
+                            "posterUrl":$('#posterUrl').val()
+                        }),
+                        "success": function () {
+                            toastr.success("修改成功!");
+                            $('#updateModal').modal('hide');
+                            $('#table').bootstrapTable('refresh');
+                        },
+                        "error": function () {
+                            alert("添加失败");
+                        }
+                    });
+                }
+
+
+            });
+
+            $('#btn_delete').click(function () {
+                var row=$("#table").bootstrapTable('getSelections');
+                if(row[0]==null)
+                    toastr.info("请选择一条记录进行删除操作!");
+                else{
+                    $('#delContent').text(row[0].title);
+                    $('#deleteModal').modal('show');
+                }
+
+            });
+            $('#subDel').click(function () {
+                var row=$("#table").bootstrapTable('getSelections');
+                $.ajax({
+                    "type": "POST",
+                    "url" : "publish/delGather",
+                    "dataType":"json",
+                    "data":{
+                        "id":row[0].id
+                    },
+                    "success": function (msg) {
+                        if(msg.code!=0){
+                            toastr.error(msg.msg);
+                            $('#deleteModal').modal('hide');
+                            return;
+                        }
+                        toastr.success("删除成功! ");
+                        $('#deleteModal').modal('hide');
+                        $('#table').bootstrapTable('refresh');
+                    },
+                    "error":function (msg) {
+                        alert("删除失败! "+msg.msg);
+                    }
+                });
+            })
+
+        });
+
+        // function setSex(value) {
+        //     $('#sex').text(value);
+        // }
+        </script>
+
+</head>
+<body>
+
+    <table id="table" class="table table-bordered" ></table>
+    <div id="toolbar">
+        <button class="btn btn-default" id="btn_export">
+            导出 <i class="glyphicon glyphicon-floppy-save"></i>
+        </button>
+        <!--<button class="btn btn-default" id="btn_update">-->
+            <!--修改 <i class="glyphicon glyphicon-pencil"></i>-->
+        <!--</button>-->
+        <!--<button class="btn btn-default" id="btn_delete">-->
+            <!--删除 <i class="glyphicon glyphicon-trash"></i>-->
+        <!--</button>-->
+    </div>
+    <iframe src="" frameborder="0" hspace="0" vspace="0" name="frameName" style="display:none"></iframe>
+
+
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="updateForm" id="updateForms" class="" action="#" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">修改活动信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title">主题:</label>
+                            <textarea type="text" class="form-control" id="title" name="title" placeholder="请输入主题"></textarea>
+                        </div>
+
+
+                        <!--<div class="form-group">-->
+                            <!--<label for="groupId">绑定群组:</label>-->
+                            <!--<input type="text" class="form-control" id="groupId" name="groupId" placeholder="请输入绑定群组">-->
+                        <!--</div>-->
+                        <div class="form-group">
+                            <label for="startTime">开始时间:</label>
+                            <input type="text" class="form-control" id="startTime" name="startTime" placeholder="请输入开始时间">
+                        </div>
+                        <div class="form-group">
+                            <label for="endTime">结束时间:</label>
+                            <input type="text" class="form-control" id="endTime" name="endTime" placeholder="请输入结束时间">
+                        </div>
+                        <div class="form-group">
+                            <label for="posterUrl">活动海报地址:</label>
+                            <textarea type="text" class="form-control" id="posterUrl" name="posterUrl" placeholder="请输入活动海报地址"></textarea>
+                        </div>
+
+                        <!--<div class="form-group">-->
+                            <!--<label >性别:</label>-->
+                            <!--<div class="dropdown">-->
+                                <!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+                                    <!--<text type="text" id="sex" name="sex" value="男">男</text>-->
+                                    <!--<span class="caret"></span>-->
+                                <!--</button>-->
+                                <!--<ul id="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1">-->
+                                    <!--<li><a href="#ul" onclick="setSex('男')" class="dropdown-item">男</a></li>-->
+                                    <!--<li><a href="#ul" onclick="setSex('女')" class="dropdown-item">女</a></li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" id="subUpdate" class="btn btn-primary">提交更改</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">删除活动</h4>
+                </div>
+                <div class="modal-body">
+                    <h5>您确定要删除 <text id="delContent" style="font-weight:bold;"></text> 活动吗？</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" id="subDel" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+</body>
+</html>
