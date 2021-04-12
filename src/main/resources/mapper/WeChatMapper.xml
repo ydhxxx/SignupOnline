@@ -5,15 +5,52 @@
 <mapper namespace="com.example.signuponline.mapper.WeChatMapper">
 
 
-
-    <select id="login" parameterType="com.example.signuponline.bean.User">
+    <!-- 小程序登录-->
+    <insert id="login" parameterType="com.example.signuponline.bean.User">
 
         INSERT INTO `user`(`openid`, `session_key`, `create_time`,`nick_name`,`avatar_url`)
         SELECT #{user.openid}, #{user.sessionKey}, current_timestamp(),#{user.nickName},#{user.avatarUrl}
         FROM DUAL
-        WHERE NOT EXISTS(SELECT `session_key` FROM `user` WHERE `openid` = #{user.openid})
+        WHERE NOT EXISTS(SELECT `session_key` FROM `user` WHERE `openid` = #{user.openid});
+
+    </insert>
+
+    <!-- 查询是否登录-->
+    <select id="ifLogin" parameterType="String" resultType="com.example.signuponline.bean.User">
+
+        select * from `user` where `openid`=#{openid};
 
     </select>
 
+    <!-- 注册web端-->
+    <insert id="webSignUp" parameterType="String">
+
+        INSERT INTO `web_user`(`openid`, `number`,`password`, `create_time`)
+        SELECT #{map.openid}, #{map.number},#{map.password}, current_timestamp()
+        FROM DUAL
+        WHERE NOT EXISTS(SELECT `create_time` FROM `web_user` WHERE `openid` = #{map.openid});
+
+    </insert>
+
+    <!-- 查询是否注册-->
+    <select id="ifSignUp" resultType="String">
+
+        SELECT `number` from `web_user` WHERE `openid`=#{openid};
+
+    </select>
+
+    <!-- web端登录-->
+    <select id="loginWeb" parameterType="String" resultType="String">
+
+        SELECT `openid` FROM `web_user` WHERE `number`=#{map.number} AND `password`=#{map.password};
+
+    </select>
+
+    <!-- web端获取用户信息 -->
+    <select id="getUser" parameterType="String" resultType="com.example.signuponline.bean.User">
+
+        SELECT `openid`,`nick_name`,`avatar_url` FROM `user` WHERE `openid`=#{openid};
+
+    </select>
 
 </mapper>

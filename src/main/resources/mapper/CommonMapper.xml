@@ -290,6 +290,7 @@
             `id` = #{id};
 
     </select>
+
     <!-- 根据groupId获取信息收集活动具体表单field-->
     <select id="getGatherDetailsField" resultType="com.example.signuponline.bean.GatherField">
 
@@ -302,6 +303,13 @@
             `gather_field`
         WHERE
             `gather_id` = #{id};
+
+    </select>
+
+    <!-- 根据groupId获取信息收集活动具体表单field-->
+    <select id="getBrows" resultType="int">
+
+        SELECT  `browse_times` FROM `browse` WHERE `activity_id`=#{id};
 
     </select>
 </mapper>

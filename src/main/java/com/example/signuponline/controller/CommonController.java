@@ -50,9 +50,13 @@ public class CommonController {
     @GetMapping("/homePage/getActivityDetails")
     public String getActivityDetails(Integer id) throws NullPointerException{
         IdController.idIsNull(id);
-        List<Activity> list= commonService.getActivityDetails(id);
+        Map<String,Object> map=new HashMap<>(2);
+        Activity activity= commonService.getActivityDetails(id);
         commonService.browse(id);
-        return LogResult.success(list);
+        int brows=commonService.getBrows(id);
+        map.put("activity",activity);
+        map.put("brows",brows);
+        return LogResult.success(map);
     }
 
 

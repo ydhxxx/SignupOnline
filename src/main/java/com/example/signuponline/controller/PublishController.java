@@ -211,14 +211,14 @@ public class PublishController {
             Map<String,Object> node=new HashMap<>(4);
             node.put("id",i++);
             node.put("text",activity.getTitle());
-            node.put("url","partakes?type="+1+"&title="+activity.getTitle()+"&id="+activity.getId());
+            node.put("url","/partakes?type="+1+"&title="+activity.getTitle()+"&id="+activity.getId());
             nodes.add(node);
         }
         for(GatherActivity gather :gatherList){
             Map<String,Object> node=new HashMap<>(4);
             node.put("id",i++);
             node.put("text",gather.getTitle());
-            node.put("url","partakes?type="+2+"&title="+gather.getTitle()+"&id="+gather.getId());
+            node.put("url","/partakes?type="+2+"&title="+gather.getTitle()+"&id="+gather.getId());
             nodes.add(node);
         }
         map.put("nodes",nodes);
@@ -254,6 +254,7 @@ public class PublishController {
         List<Object> list=publishService.getGaPartake(id);
         return LogResult.success(list);
     }
+
 
 
 }

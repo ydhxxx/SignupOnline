@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -27,12 +27,12 @@
     <script src="/bootstrap/tableExport.jquery.plugin-master/tableExport.min.js"></script>
     <script src="/bootstrap/tableExport.jquery.plugin-master/libs/js-xlsx/xlsx.core.min.js"></script>
     <script src="/bootstrap/tableExport.jquery.plugin-master/libs/FileSaver/FileSaver.min.js"></script>
-    <script src="/bootstrap/bootstrapValidator-master/dist/js/bootstrapValidator.min.js"></script>
-    <script src="/bootstrap/bootstrapValidator-master/dist/js/language/zh_CN.js"></script>
+    <script src="/bootstrap/bootstrapvalidator-master/dist/js/bootstrapValidator.min.js"></script>
+    <script src="/bootstrap/bootstrapvalidator-master/dist/js/language/zh_CN.js"></script>
 
 
 
-    <script>
+    <script th:inline="javascript">
         function init(newUrl1){
             $('#table').bootstrapTable({
                 ajax : function (request) {
@@ -42,7 +42,7 @@
                         // "contentType": "application/json;charset=utf-8",
                         "dataType":"json",
                         "data":{
-                            "openid":'oHY_74pl-fkDrIbxvxkfxzqws3D4',
+                            "openid":[[${openid}]],
                             "isAll":true
                         },
                         "success": function (msg) {

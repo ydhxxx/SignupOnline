@@ -22,18 +22,23 @@ public class PageController {
     }
 
 
-    @GetMapping(value = "/success")
-    public String success(){
-        return "success";
-    }
+//    @GetMapping(value = "/success")
+//    public String success(){
+//        return "success";
+//    }
 
 
 
     @GetMapping(value ="/activity")
-    public String showActivity(){return "activity";}
+    public String showActivity(Model model,String openid){
+        model.addAttribute("openid",openid);
+        return "activity";
+    }
 
     @GetMapping(value ="/gather")
-    public String showGather(){return "gather";}
+    public String showGather(Model model,String openid){
+        model.addAttribute("openid",openid);
+        return "gather";}
 
 
     @GetMapping(value ="/partakes")

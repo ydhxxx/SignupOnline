@@ -31,7 +31,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public List<Activity> getActivityDetails(Integer id) {
+    public Activity getActivityDetails(Integer id) {
         return commonMapper.getActivityDetails(id);
     }
 
@@ -116,6 +116,11 @@ public class CommonServiceImpl implements CommonService {
         List<GatherField> listField=commonMapper.getGatherDetailsField(id);
         Map<String,Object> map=new HashMap<>();
         return TransGather.transGather(map,gatherActivity,listField);
+    }
+
+    @Override
+    public int getBrows(Integer id) {
+        return commonMapper.getBrows(id);
     }
 
 

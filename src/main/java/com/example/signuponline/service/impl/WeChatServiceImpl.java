@@ -37,4 +37,31 @@ public class WeChatServiceImpl implements WeChatService {
     public User saveWeChatUser(String code) {
         return null;
     }
+
+    @Override
+    public User ifLogin(String openid) {
+        User user=weChatMapper.ifLogin(openid);
+
+        return user;
+    }
+
+    @Override
+    public boolean webSignUp(Map<String, String> map) {
+        return weChatMapper.webSignUp(map);
+    }
+
+    @Override
+    public String ifSignUp(String openid) {
+        return weChatMapper.ifSignUp(openid);
+    }
+
+    @Override
+    public String loginWeb(Map<String, String> map) {
+        return weChatMapper.loginWeb(map);
+    }
+
+    @Override
+    public User getUser(String openid) {
+        return weChatMapper.getUser(openid);
+    }
 }

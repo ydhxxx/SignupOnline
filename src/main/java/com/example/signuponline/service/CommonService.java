@@ -26,7 +26,7 @@ public interface CommonService {
      * @param id id
      * @return List<Activity>
      */
-    List<Activity> getActivityDetails(Integer id);
+    Activity getActivityDetails(Integer id);
 
     /**
      * 根据id进行浏览记录
@@ -132,4 +132,10 @@ public interface CommonService {
      */
     Map<String,Object> getGatherDetails(String id);
 
+    /**
+     * 获取活动浏览量
+     * @param  id id
+     * @return int
+     */
+    int getBrows(Integer id);
 }

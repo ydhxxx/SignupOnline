@@ -19,25 +19,25 @@
     <script src="/bootstrap/bTabs-master/b.tabs.min.js"></script>
 
 
-    <script type="text/javascript">
+    <script th:inline="javascript">
         $(function(){
             $.ajax({
                 "type": "GET",
-                "url" : "publish/getAllActivity",
+                "url" : "/publish/getAllActivity",
                 // "contentType": "application/json;charset=utf-8",
                 "dataType":"json",
                 "data":{
-                    "openid":'oHY_74pl-fkDrIbxvxkfxzqws3D4'
+                    "openid":[[${openid}]]
                 },
                 "success": function (msg) {
                     console.log(msg.data);
                     var tabs=[
-                        {
-                            "id":"0",
-                            "text":"个人信息",
-                            "url":"/project",
-                            "icon":"glyphicon glyphicon-user"
-                        },
+                        // {
+                        //     "id":"0",
+                        //     "text":"个人信息",
+                        //     "url":"/project",
+                        //     "icon":"glyphicon glyphicon-user"
+                        // },
                         {
                             "id":"1",
                             "text":" 我的发布",
@@ -45,12 +45,12 @@
                             "nodes":[{
                                 "id":"2",
                                 "text":"普通报名活动",
-                                "url":"/activity"
+                                "url":"/activity?openid="+[[${openid}]]
                             },
                                 {
                                     "id":"3",
                                     "text":"信息收集活动",
-                                    "url":"/gather"
+                                    "url":"/gather?openid="+[[${openid}]]
                                 }]
                         }
                         ];
@@ -125,16 +125,17 @@
                     <h2>基于微信小程序的“在线报名”管理系统</h2>
                     <div class="head-right">
                         <i class="ico-user"></i>当前用户：
-                        <image style="width:60px;height:60px;margin-top:-19px;" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLsVHib2j78AAQv70hLEUj15bnr14HZPgdAqmbmZ2VyqxRGDYON1s7K4IoibbskKBW2s5v3RYbYEeVA/132">
+                        <!--<image style="width:60px;height:60px;margin-top:-19px;" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLsVHib2j78AAQv70hLEUj15bnr14HZPgdAqmbmZ2VyqxRGDYON1s7K4IoibbskKBW2s5v3RYbYEeVA/132">-->
+                        <image style="width:60px;height:60px;margin-top:-19px;" th:src="${avatarUrl}">
+
                         <div class="userslideDown">
                             <a href="javascript:;" class="superUser">
-                                <!--<span th:text="${name}">余冬海</span>-->
-                                叽里咕噜
+                                <span th:text="${nickName}"></span>
                                 <i class="ico-tri"></i>
                             </a>
                             <div class="slidedownBox">
                                 <ul>
-                                    <li><a href="" target="Mainindex">修改密码</a></li>
+                                    <!--<li><a href="" target="Mainindex">修改密码</a></li>-->
                                     <li iconCls="glyphicon glyphicon-log-out">
                                         <a href="/" target="_parent">退出&nbsp;<span class="glyphicon glyphicon-log-out"></span></a>
                                     </li>
@@ -163,9 +164,7 @@
                             <div class="text-primary">
                                 <div class="jumbotron">
                                     <h1>Hello!</h1>
-                                    <p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。
-                                        该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。
-                                        通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。
+                                    <p>欢迎来到“在线报名”小程序的后台管理端
                                     </p>
                                 </div>
                             </div>

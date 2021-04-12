@@ -6,6 +6,7 @@ import com.example.signuponline.bean.UserFlag;
 import com.example.signuponline.common.IdController;
 import com.example.signuponline.common.LogResult;
 import com.example.signuponline.service.PartakeService;
+import com.example.signuponline.util.PartakeNumber;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -132,6 +133,17 @@ public class PartakeController {
         Map<String,Object> map=new HashMap<>();
         map.put("activityList",activityList);
         map.put("gatherList",gatherList);
+        return LogResult.success(map);
+    }
+
+    @ApiOperation(value = "获取个人参与的活动数量")
+    @ApiImplicitParam(name = "openid", value = "openid", required = true, dataType = "String")
+    @ResponseBody
+    @GetMapping("/getMyPartakeNumber")
+    public String getMyPartakeNumber(String openid){
+        List<Activity> activityList=partakeService.getActivity(openid);
+        List<GatherActivity> gatherList=partakeService.getGather(openid);
+        Map<String,Object> map= PartakeNumber.getNumber(activityList,gatherList);
         return LogResult.success(map);
     }
 

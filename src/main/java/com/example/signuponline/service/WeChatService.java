@@ -32,4 +32,39 @@ public interface WeChatService {
      * @return user
      */
     User saveWeChatUser(String code);
+
+    /**
+     * 判断用户是否登录
+     * @param openid openid
+     * @return user
+     */
+    User ifLogin(String openid);
+
+    /**
+     * 注册web端账号
+     * @param map map
+     * @return bool
+     */
+    boolean webSignUp(Map<String, String> map);
+
+    /**
+     * 查询是否注册
+     * @param openid openid
+     * @return number
+     */
+    String ifSignUp(String openid);
+
+    /**
+     * web端登录
+     * @param map map
+     * @return bool
+     */
+    String loginWeb(Map<String, String> map);
+
+    /**
+     * web端获取用户信息
+     * @param openid openid
+     * @return user
+     */
+    User getUser(String openid);
 }

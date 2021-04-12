@@ -29,7 +29,7 @@ public interface CommonMapper {
      * @param id id
      * @return List<Activity>
      */
-    List<Activity> getActivityDetails(@Param("id") Integer id);
+    Activity getActivityDetails(@Param("id") Integer id);
 
     /**
      * 根据id进行浏览记录
@@ -147,4 +147,11 @@ public interface CommonMapper {
      * @return list
      */
     List<GatherField> getGatherDetailsField(@Param("id") String id);
+
+    /**
+     * 获取活动浏览量
+     * @param  id id
+     * @return int
+     */
+    int getBrows(@Param("id") Integer id);
 }
