@@ -273,7 +273,7 @@
 
     </select>
 
-    <!-- 根据groupId获取信息收集活动具体表单-->
+    <!-- 根据活动id获取信息收集活动具体表单-->
     <select id="getGatherDetails" resultType="com.example.signuponline.bean.GatherActivity">
 
         SELECT
@@ -291,7 +291,7 @@
 
     </select>
 
-    <!-- 根据groupId获取信息收集活动具体表单field-->
+    <!-- 根据活动id获取信息收集活动具体表单field-->
     <select id="getGatherDetailsField" resultType="com.example.signuponline.bean.GatherField">
 
         SELECT

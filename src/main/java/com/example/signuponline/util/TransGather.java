@@ -36,24 +36,29 @@ public class TransGather {
 
         for(GatherField gatherField : listField){
             switch(gatherField.getType()){
+                //输入框
                 case 0:
                     inputList.add(gatherField.getField());
                     break;
+                //单选框
                 case 1:
                     Map<String,Object> map1=new HashMap<>();
                     map1.put("name",gatherField.getField());
                     map1.put("selects",gatherField.getSelectValue().split("#"));
                     selectList.add(map1);
                     break;
+                //多选框
                 case 2:
                     Map<String,Object> map2=new HashMap<>();
                     map2.put("name",gatherField.getField());
                     map2.put("selects",gatherField.getSelectValue().split("#"));
                     selectMulList.add(map2);
                     break;
+                //文本区
                 case 3:
                     areaList.add(gatherField.getField());
                     break;
+                //地址
                 case 4:
                     map.put("isAddress",true);
                     break;

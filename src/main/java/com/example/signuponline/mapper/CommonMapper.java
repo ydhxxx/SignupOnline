@@ -135,14 +135,14 @@ public interface CommonMapper {
     List<Object> getGatherByGroup(@Param("groupId") String groupId);
 
     /**
-     * 根据群组id查询信息收集活动具体表单
+     * 根据活动id查询信息收集活动具体表单
      * @param  id 群组id
      * @return list
      */
     GatherActivity getGatherDetails(@Param("id") String id);
 
     /**
-     * 根据群组id查询信息收集活动具体表单field
+     * 根据活动id查询信息收集活动具体表单field
      * @param  id 群组id
      * @return list
      */

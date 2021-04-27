@@ -60,6 +60,7 @@ public class WeChatController {
     public String loginWeb(@RequestBody Map<String,String> map) throws NullPointerException{
         String openid=weChatService.loginWeb(map);
         if(openid==null){
+            log.info("账号或密码错误");
             return LogResult.failed("账号或密码错误");
         }
         else{

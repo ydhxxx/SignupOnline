@@ -126,7 +126,7 @@ public interface CommonService {
     List<Object> getGatherByGroup(String groupId);
 
     /**
-     * 根据群组id查询信息收集活动具体表单
+     * 根据活动id查询信息收集活动具体表单
      * @param  id 群组id
      * @return list
      */
